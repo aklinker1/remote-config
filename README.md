@@ -37,7 +37,7 @@ make build
 make run-prod
 ```
 
-Then visit <http://localhost:8000>!
+Then visit <http://localhost>!
 
 ## Configuration
 

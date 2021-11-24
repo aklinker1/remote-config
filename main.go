@@ -46,16 +46,16 @@ func main() {
 //go:embed src/backend/mock-ui/*
 var devUI embed.FS
 
-//go:embed src/frontend/dist/*
+//go:embed dist/*
 var prodUI embed.FS
 
 func getUIFileSystem() *fs.FS {
 	var err error
 	var ui fs.FS
-	if true {
+	if os.Getenv("USE_MOCK_UI") == "true" {
 		ui, err = fs.Sub(devUI, "src/backend/mock-ui")
 	} else {
-		ui, err = fs.Sub(prodUI, "src/frontend/dist")
+		ui, err = fs.Sub(prodUI, "dist")
 	}
 	if err != nil {
 		panic("ui folder not found in embedded files")

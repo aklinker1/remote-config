@@ -1,10 +1,9 @@
 # Setup
 FROM golang:1.17-alpine
-ARG UI_PATH
 RUN mkdir /build
 WORKDIR /build
 ADD go.mod go.sum ./
 RUN go mod download
 RUN GO111MODULE=on go get github.com/cortesi/modd/cmd/modd
-ADD src/frontend/dist src/frontend/dist
+ADD dist dist
 CMD modd
