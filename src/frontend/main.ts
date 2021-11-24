@@ -1,1 +1,5 @@
-console.log("[tag] hello world 2");
+import "vue-global-api";
+import { createApp } from "vue";
+import Dashboard from "./components/Dashboard.vue";
+
+createApp(Dashboard).mount("#app");
