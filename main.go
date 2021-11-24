@@ -1,0 +1,55 @@
+package main
+
+import (
+	"embed"
+	"fmt"
+	"io/fs"
+	"net/http"
+	"os"
+
+	"anime-skip.com/remote-config/src/backend"
+	"anime-skip.com/remote-config/src/backend/aws"
+	"anime-skip.com/remote-config/src/backend/cache"
+	"anime-skip.com/remote-config/src/backend/operations"
+	"github.com/go-chi/chi"
+)
+
+func main() {
+	ui := getUIFileSystem()
+	repo := cache.NewCacheRepo(aws.NewS3Repo())
+	router := backend.CreateRouter(ui)
+
+	operations.SetupUIRoutes(router, ui)
+
+	router.Route("/api/", func(apiRoute chi.Router) {
+		apiRoute.Route("/config/{app}", func(configRoute chi.Router) {
+			configRoute.Get("/", operations.GetAppConfigHandler(repo))
+			configRoute.Put("/", operations.UpdateAppConfigHandler(repo))
+		})
+		apiRoute.Get("/apps", operations.GetAppsHandler(repo))
+	})
+
+	port := ":" + os.Getenv("PORT")
+	fmt.Printf("Backend started  @ %s\n", port)
+	http.ListenAndServe(port, router)
+}
+
+//go:embed src/backend/mock-ui/*
+var devUI embed.FS
+
+//go:embed src/frontend/dist/*
+var prodUI embed.FS
+
+func getUIFileSystem() *fs.FS {
+	var err error
+	var ui fs.FS
+	if true {
+		ui, err = fs.Sub(devUI, "src/backend/mock-ui")
+	} else {
+		ui, err = fs.Sub(prodUI, "src/frontend/dist")
+	}
+	if err != nil {
+		panic("ui folder not found in embedded files")
+	}
+	return &ui
+}

@@ -13,16 +13,12 @@ Make sure you have all the required tools installed
 - `make`
 - `aws`
 
-Here are some useful commands you can use!
+Then startup the app in dev mode and visit <http://localhost>!
 
-```
-# Run in dev mode
+```bash
 make run
-
-# Build the production binary
-make
-make build
-
-# Run in production mode
-make run-prod
 ```
+
+The frontend will hot-reload when saving changes inside the `src/frontend` directory, and the backend will restart when saving any files in the `src/backend` directory!
+
+> Saving the `main.go` file will not automatically restart, you'll need to restart `make run`

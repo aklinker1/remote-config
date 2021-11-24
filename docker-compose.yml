@@ -1,0 +1,33 @@
+services:
+  proxy:
+    image: nginx:alpine
+    volumes:
+      - "./docker/nginx-proxy.conf:/etc/nginx/conf.d/default.conf"
+    ports:
+      - "80:80"
+
+  backend:
+    build:
+      dockerfile: docker/Dockerfile.dev.backend
+      context: .
+    volumes:
+      - ./docker/modd.conf:/build/modd.conf
+      - ./main.go:/build/main.go
+      - ./src/backend:/build/src/backend
+    ports:
+      - 8000:8000
+    environment:
+      USE_MOCK_UI: "true"
+      PORT: 8000
+
+  frontend:
+    build:
+      dockerfile: docker/Dockerfile.dev.frontend
+      context: .
+    volumes:
+      - ./src/frontend:/build/src/frontend
+      - ./index.html:/build/index.html
+    ports:
+      - 3000:3000
+    environment:
+      - VITE_API_ENDPOINT=http://api.remote-config.local/api

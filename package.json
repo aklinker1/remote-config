@@ -1,0 +1,8 @@
+{
+  "name": "remote-config-web",
+  "private": true,
+  "devDependencies": {
+    "typescript": "^4.4.4",
+    "vite": "^2.6.13"
+  }
+}
