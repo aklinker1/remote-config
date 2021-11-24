@@ -6,5 +6,5 @@ RUN apk --no-cache add curl
 RUN curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm@6
 ADD package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
-ADD vite.config.ts .
+ADD vite.config.ts tailwind.config.js postcss.config.js ./
 CMD /build/node_modules/.bin/vite --host

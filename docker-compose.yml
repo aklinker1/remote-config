@@ -29,5 +29,3 @@ services:
       - ./index.html:/build/index.html
     ports:
       - 3000:3000
-    environment:
-      - VITE_API_ENDPOINT=http://api.remote-config.local/api
