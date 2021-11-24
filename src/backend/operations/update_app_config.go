@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"anime-skip.com/remote-config/src/backend"
+	"anime-skip.com/remote-config/src/backend/utils"
 	"github.com/go-chi/chi"
 )
 
@@ -15,15 +16,21 @@ func UpdateAppConfigHandler(repo backend.Repo) http.HandlerFunc {
 		if err != nil {
 			panic(err)
 		}
+
 		var newConfig backend.JSON
 		err = json.Unmarshal(body, &newConfig)
 		if err != nil {
-			panic(err)
+			utils.SendErrorJSON(rw, err)
+			return
 		}
-		app := chi.URLParam(r, "app")
-		println(app)
 
-		repo.SaveConfig(app, newConfig)
-		rw.WriteHeader(http.StatusNoContent)
+		app := chi.URLParam(r, "app")
+		savedConfig, err := repo.SaveConfig(app, newConfig)
+		if err != nil {
+			utils.SendErrorJSON(rw, err)
+			return
+		}
+
+		utils.SendJSON(rw, http.StatusCreated, savedConfig)
 	}
 }

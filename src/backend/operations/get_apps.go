@@ -9,6 +9,11 @@ import (
 
 func GetAppsHandler(repo backend.Repo) http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
-		utils.SendJSON(rw, http.StatusOK, repo.GetApps())
+		apps, err := repo.GetApps()
+		if err != nil {
+			utils.SendErrorJSON(rw, err)
+			return
+		}
+		utils.SendJSON(rw, http.StatusOK, apps)
 	}
 }

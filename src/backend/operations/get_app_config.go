@@ -11,8 +11,12 @@ import (
 func GetAppConfigHandler(repo backend.Repo) http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
 		app := chi.URLParam(r, "app")
-		println(app)
 
-		utils.SendJSON(rw, http.StatusOK, repo.GetConfig(app))
+		config, err := repo.GetConfig(app)
+		if err != nil {
+			utils.SendErrorJSON(rw, err)
+			return
+		}
+		utils.SendJSON(rw, http.StatusOK, config)
 	}
 }

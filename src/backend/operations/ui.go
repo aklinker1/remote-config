@@ -1,6 +1,7 @@
 package operations
 
 import (
+	"errors"
 	"io/fs"
 	"net/http"
 	"strings"
@@ -8,19 +9,19 @@ import (
 	"github.com/go-chi/chi"
 )
 
-func SetupUIRoutes(r *chi.Mux, website *fs.FS) {
-	fileServer(r, "/", website)
+func SetupUIRoutes(r *chi.Mux, website *fs.FS) error {
+	return fileServer(r, "/", website)
 }
 
-func fileServer(r *chi.Mux, public string, assets *fs.FS) {
+func fileServer(r *chi.Mux, public string, assets *fs.FS) error {
 	index, err := fs.ReadFile(*assets, "index.html")
 	if err != nil {
-		panic(err)
+		return err
 	}
 	embeddedFs := http.StripPrefix(public, http.FileServer(http.FS(*assets)))
 
 	if strings.ContainsAny(public, "{}*") {
-		panic("FileServer does not permit URL parameters.")
+		return errors.New("FileServer does not permit URL parameters.")
 	}
 
 	if public != "/" && public[len(public)-1] != '/' {
@@ -37,4 +38,6 @@ func fileServer(r *chi.Mux, public string, assets *fs.FS) {
 			embeddedFs.ServeHTTP(w, r)
 		}
 	}))
+
+	return nil
 }

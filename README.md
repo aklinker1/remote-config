@@ -18,6 +18,11 @@ Make sure you have all the required tools installed
 Then startup the app in dev mode and visit <http://localhost>!
 
 ```bash
+echo "AWS_REGION=<fill-out>
+AWS_ACCESS_KEY_ID=<fill-out>
+AWS_SECRET_ACCESS_KEY=<fill-out>
+" > docker/aws.env
+
 make run
 ```
 
@@ -33,3 +38,9 @@ make run-prod
 ```
 
 Then visit <http://localhost:8000>!
+
+## Configuration
+
+You can set the `S3_BUCKET` and `S3_FILE_PATH` environment variables to specify which bucket and what file in that bucket you want to use to store the data.
+
+In dev mode, they are hard coded according to the `docker-compose.yml` file.

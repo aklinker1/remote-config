@@ -16,10 +16,19 @@ import (
 
 func main() {
 	ui := getUIFileSystem()
-	repo := cache.NewCacheRepo(aws.NewS3Repo())
+	bucket := os.Getenv("S3_BUCKET")
+	filePath := os.Getenv("S3_FILE_PATH")
+
+	s3Repo, err := aws.NewS3Repo(bucket, filePath)
+	checkError(err)
+
+	repo, err := cache.NewCacheRepo(s3Repo)
+	checkError(err)
+
 	router := backend.CreateRouter(ui)
 
-	operations.SetupUIRoutes(router, ui)
+	err = operations.SetupUIRoutes(router, ui)
+	checkError(err)
 
 	router.Route("/api/", func(apiRoute chi.Router) {
 		apiRoute.Route("/config/{app}", func(configRoute chi.Router) {
@@ -52,4 +61,10 @@ func getUIFileSystem() *fs.FS {
 		panic("ui folder not found in embedded files")
 	}
 	return &ui
+}
+
+func checkError(err error) {
+	if err != nil {
+		panic(err)
+	}
 }

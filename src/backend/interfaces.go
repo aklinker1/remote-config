@@ -4,8 +4,8 @@ type JSON = map[string]interface{}
 type Blob = map[string]JSON
 
 type Repo interface {
-	GetBlob() Blob
-	GetApps() []string
-	GetConfig(app string) JSON
-	SaveConfig(app string, config JSON) error
+	GetBlob() (Blob, error)
+	GetApps() ([]string, error)
+	GetConfig(app string) (JSON, error)
+	SaveConfig(app string, config JSON) (JSON, error)
 }
