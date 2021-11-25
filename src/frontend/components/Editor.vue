@@ -107,5 +107,3 @@ function format() {
   code.value = stringify(parse(code.value), code.value);
 }
 </script>
-
-<style></style>

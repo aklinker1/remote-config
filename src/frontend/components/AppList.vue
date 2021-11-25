@@ -22,7 +22,6 @@
           text-white text-opacity-70 text-xs
           cursor-pointer
           transition-all
-          fill-current
         "
         :src="TrashIcon"
         :alt="`Delete ${app}`"
