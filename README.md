@@ -2,7 +2,11 @@
 
 This is a lightweight and simple remote config server with a UI for management backed by AWS S3.
 
-The frontend is written with Vue, while the backend API written in Go serves it and the REST endpoints.
+The backend API (Go) serves a frontend (Vue) and HTTP endpoints.
+
+![demo](https://user-images.githubusercontent.com/10101283/143332259-3b12b634-b15d-4568-bf24-c3d1d8173a0e.png)
+
+> I wrote this because I don't want to pay for another service and Firebase doesn't work all the time in web extensions :/
 
 ## Get Started
 
@@ -43,4 +47,4 @@ Then visit <http://localhost>!
 
 You can set the `S3_BUCKET` and `S3_FILE_PATH` environment variables to specify which bucket and what file in that bucket you want to use to store the data.
 
-In dev mode, they are hard coded according to the `docker-compose.yml` file.
+In dev mode, they are hard coded in the `docker-compose.yml` file.
