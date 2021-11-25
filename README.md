@@ -37,7 +37,6 @@ The frontend will hot-reload when saving changes inside the `src/frontend` direc
 To make and run a production build of the app, run:
 
 ```bash
-make build
 make run-prod
 ```
 
