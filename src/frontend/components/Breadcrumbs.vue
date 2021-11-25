@@ -27,7 +27,7 @@ watch(
 
 function getPath(): string[] {
   const items = route.path
-    .replace(/^\//, "Remote Config/")
+    .replace(/^\//, "Apps/")
     .replace(/\/$/g, "")
     .split("/")
     .map((part) => decodeURIComponent(part));

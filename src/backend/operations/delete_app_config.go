@@ -11,6 +11,11 @@ import (
 func DeleteAppConfigHandler(repo backend.Repo) http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
 		app := chi.URLParam(r, "app")
+		err := utils.CheckAuthHeader(r)
+		if err != nil {
+			rw.WriteHeader(http.StatusUnauthorized)
+			return
+		}
 		config, err := repo.DeleteConfig(app)
 		if err != nil {
 			utils.SendErrorJSON(rw, err)

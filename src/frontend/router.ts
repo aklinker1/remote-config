@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { getAuthToken } from "./state/auth-token";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -12,6 +13,9 @@ const routes: RouteRecordRaw[] = [
       {
         path: ":app",
         component: () => import("./components/EditApp.vue"),
+        meta: {
+          requiresAuth: true,
+        },
       },
     ],
   },
@@ -26,4 +30,10 @@ export const router = createRouter({
   routes,
 });
 
-// router.beforeEach((to, from, next) => {});
+router.beforeEach(async (to, from, next) => {
+  if (!getAuthToken() && to.meta.requiresAuth) {
+    router.replace(`/login?redirect=${to.fullPath}`);
+    return;
+  }
+  next();
+});

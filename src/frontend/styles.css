@@ -1,0 +1,21 @@
+button,
+input[type="submit"] {
+  @apply rounded px-3 py-1.5 cursor-pointer transition-all;
+}
+button.primary,
+input[type="submit"].primary {
+  @apply bg-blue-300 rounded;
+}
+button.secondary,
+input[type="submit"].secondary {
+  @apply text-white text-opacity-70 hover:bg-gray-700 ring-1 ring-gray-700 transition-all hover:text-opacity-100;
+}
+button:disabled,
+input[type="submit"]:disabled {
+  @apply cursor-not-allowed opacity-30;
+}
+
+input[type="text"],
+input[type="password"] {
+  @apply px-4 py-2 bg-gray-900 rounded ring-0 ring-blue-300 transition-all ease-linear dark:text-white focus:ring focus:ring-offset-1 ring-offset-transparent;
+}

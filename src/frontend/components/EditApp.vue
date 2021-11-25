@@ -1,32 +1,33 @@
 <template>
-  <p v-if="error">{{ error }}</p>
+  <p v-if="error" class="text-red-300">{{ error }}</p>
   <editor
     v-if="data"
     :data="data"
     :loading="isSaving"
     loading-text="Saving..."
     @save="saveNewConfig"
+    @discard="$router.back()"
   />
 </template>
 
 <script lang="ts" setup>
-import axios from "axios";
 import { useRoute } from "vue-router";
+import { api } from "../api";
+import { getAuthToken } from "../state/auth-token";
 import Editor from "./Editor.vue";
 
 const data = ref<object>();
 const error = ref<string>();
 
 const route = useRoute();
-const appName = route.params.app;
+const appName = route.params.app as string;
 
 onMounted(loadConfig);
 
 async function loadConfig() {
   try {
     error.value = undefined;
-    const res = await axios.get(`/api/config/${appName}`);
-    data.value = res.data;
+    data.value = await api.getConfig(appName);
   } catch (err) {
     error.value =
       err instanceof Error
@@ -40,8 +41,14 @@ async function saveNewConfig(config: object) {
   const animation = new Promise((res) => setTimeout(res, 400));
   try {
     isSaving.value = true;
-    const res = await axios.put(`/api/config/${appName}`, config);
-    data.value = res.data;
+    error.value = undefined;
+    data.value = await api.updateConfig(appName, config);
+  } catch (err) {
+    if (err instanceof Error) {
+      error.value = err.message;
+    } else {
+      error.value = "Unknown error: " + JSON.stringify(err);
+    }
   } finally {
     isSaving.value = false;
   }
