@@ -53,3 +53,12 @@ func (cache *cacheRepo) SaveConfig(app string, config backend.JSON) (backend.JSO
 	}
 	return savedConfig, err
 }
+
+func (cache *cacheRepo) DeleteConfig(app string) (backend.JSON, error) {
+	config, err := cache.wrapped.DeleteConfig(app)
+	if err == nil {
+		// TODO: Mutex read/write of cache?
+		delete(cache.blob, app)
+	}
+	return config, err
+}

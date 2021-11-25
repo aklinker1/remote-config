@@ -31,6 +31,6 @@ func UpdateAppConfigHandler(repo backend.Repo) http.HandlerFunc {
 			return
 		}
 
-		utils.SendJSON(rw, http.StatusCreated, savedConfig)
+		utils.SendJSON(rw, http.StatusOK, savedConfig)
 	}
 }

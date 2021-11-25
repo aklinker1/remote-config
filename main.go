@@ -34,6 +34,7 @@ func main() {
 		apiRoute.Route("/config/{app}", func(configRoute chi.Router) {
 			configRoute.Get("/", operations.GetAppConfigHandler(repo))
 			configRoute.Put("/", operations.UpdateAppConfigHandler(repo))
+			configRoute.Delete("/", operations.DeleteAppConfigHandler(repo))
 		})
 		apiRoute.Get("/apps", operations.GetAppsHandler(repo))
 	})

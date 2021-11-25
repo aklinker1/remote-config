@@ -8,4 +8,5 @@ type Repo interface {
 	GetApps() ([]string, error)
 	GetConfig(app string) (JSON, error)
 	SaveConfig(app string, config JSON) (JSON, error)
+	DeleteConfig(app string) (JSON, error)
 }
