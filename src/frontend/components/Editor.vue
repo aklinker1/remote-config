@@ -51,6 +51,7 @@ const props = defineProps<{
 
 const emits = defineEmits<{
   (event: "save", config: object): void;
+  (event: "discard"): void;
 }>();
 
 const error = ref<string>();
@@ -82,6 +83,12 @@ function parse(str: string): object {
 }
 
 const code = ref(stringify(props.data));
+watch(
+  () => props.data,
+  (newData) => {
+    code.value = stringify(newData);
+  }
+);
 
 const highlighter = (code: string) => {
   return Prism.highlight(code, Prism.languages.javascript, "javascript");
@@ -93,6 +100,7 @@ function save() {
 
 function discard() {
   code.value = stringify(props.data);
+  emits("discard");
 }
 
 function format() {
@@ -100,14 +108,4 @@ function format() {
 }
 </script>
 
-<style>
-button {
-  @apply rounded px-3 py-1.5;
-}
-button.primary {
-  @apply bg-blue-300 rounded;
-}
-button.secondary {
-  @apply text-white text-opacity-70 hover:bg-gray-700 ring-1 ring-gray-700 transition-all hover:text-opacity-100;
-}
-</style>
+<style></style>

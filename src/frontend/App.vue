@@ -1,9 +1,5 @@
 <template>
-  <router-view />
+  <div class="max-w-lg mx-auto space-y-4 pt-16">
+    <router-view />
+  </div>
 </template>
-
-<script lang="ts" setup>
-import { provideAuthToken } from "./state/auth-token";
-
-provideAuthToken();
-</script>
