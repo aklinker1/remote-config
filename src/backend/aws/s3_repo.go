@@ -76,6 +76,20 @@ func (repo *s3Repo) GetConfig(app string) (backend.JSON, error) {
 	panic("Not implemented: s3Repo.GetApps")
 }
 
+func (repo *s3Repo) writeBlob(blob backend.Blob) error {
+	body, err := json.Marshal(blob)
+	if err != nil {
+		return err
+	}
+	repo.s3.PutObject(context.TODO(), &s3.PutObjectInput{
+		Bucket:      repo.bucket,
+		Key:         repo.filename,
+		Body:        bytes.NewReader(body),
+		ContentType: aws.String("application/json"),
+	})
+	return nil
+}
+
 func (repo *s3Repo) SaveConfig(app string, config backend.JSON) (backend.JSON, error) {
 	blob, err := repo.GetBlob()
 	if err != nil {
@@ -83,16 +97,16 @@ func (repo *s3Repo) SaveConfig(app string, config backend.JSON) (backend.JSON, e
 	}
 
 	blob[app] = config
-	body, err := json.Marshal(blob)
+	return config, repo.writeBlob(blob)
+}
+
+func (repo *s3Repo) DeleteConfig(app string) (backend.JSON, error) {
+	blob, err := repo.GetBlob()
 	if err != nil {
 		return nil, err
 	}
 
-	repo.s3.PutObject(context.TODO(), &s3.PutObjectInput{
-		Bucket:      repo.bucket,
-		Key:         repo.filename,
-		Body:        bytes.NewReader(body),
-		ContentType: aws.String("application/json"),
-	})
-	return config, nil
+	config := blob[app]
+	delete(blob, app)
+	return config, repo.writeBlob(blob)
 }

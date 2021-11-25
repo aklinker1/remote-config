@@ -1,7 +1,10 @@
 <template>
-  <h1>Dashboard</h1>
+  <div class="max-w-lg mx-auto space-y-4 pt-16">
+    <breadcrumbs />
+    <router-view />
+  </div>
 </template>
 
 <script lang="ts" setup>
-console.log("Dashboard mounted");
+import Breadcrumbs from "./Breadcrumbs.vue";
 </script>

@@ -2,20 +2,23 @@ package operations
 
 import (
 	"net/http"
-	"sort"
 
 	"anime-skip.com/remote-config/src/backend"
 	"anime-skip.com/remote-config/src/backend/utils"
+	"github.com/go-chi/chi"
 )
 
-func GetAppsHandler(repo backend.Repo) http.HandlerFunc {
+func DeleteAppConfigHandler(repo backend.Repo) http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
-		apps, err := repo.GetApps()
+		app := chi.URLParam(r, "app")
+		config, err := repo.DeleteConfig(app)
 		if err != nil {
 			utils.SendErrorJSON(rw, err)
 			return
 		}
-		sort.Strings(apps)
-		utils.SendJSON(rw, http.StatusOK, apps)
+		if config == nil {
+			config = backend.JSON{}
+		}
+		utils.SendJSON(rw, http.StatusOK, config)
 	}
 }
