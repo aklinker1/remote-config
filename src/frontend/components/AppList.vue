@@ -1,7 +1,7 @@
 <template>
   <create-app />
   <p v-if="error" class="text-red-300">{{ error }}</p>
-  <ul class="space-y-4">
+  <ul v-if="apps.length > 0" class="space-y-4">
     <li v-for="app in apps" :key="app" class="list-item">
       <router-link :to="`/${app}`"
         ><p class="font-medium text-lg dark:text-white">
@@ -31,6 +31,7 @@
       />
     </li>
   </ul>
+  <p v-else class="text-white text-opacity-50">No apps</p>
   <p v-if="isLoading" class="dark:text-white text-opacity-50">Loading...</p>
 </template>
 
