@@ -4,13 +4,14 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"os"
 	"time"
+
+	"anime-skip.com/remote-config/src/backend/env"
 )
 
 func CheckAuthHeader(r *http.Request) error {
 	auth := r.Header.Get("Authorization")
-	expectedAuth := fmt.Sprintf("Bearer %s", os.Getenv("AUTH_TOKEN"))
+	expectedAuth := fmt.Sprintf("Bearer %s", env.AUTH_TOKEN)
 	if auth != expectedAuth {
 		time.Sleep(time.Second * 2)
 		return errors.New("Unauthorized")

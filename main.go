@@ -5,21 +5,17 @@ import (
 	"fmt"
 	"io/fs"
 	"net/http"
-	"os"
 
 	"anime-skip.com/remote-config/src/backend"
 	"anime-skip.com/remote-config/src/backend/aws"
 	"anime-skip.com/remote-config/src/backend/cache"
+	"anime-skip.com/remote-config/src/backend/env"
 	"anime-skip.com/remote-config/src/backend/operations"
 	"github.com/go-chi/chi"
 )
 
 func main() {
-	ui := getUIFileSystem()
-	bucket := os.Getenv("S3_BUCKET")
-	filePath := os.Getenv("S3_FILE_PATH")
-
-	s3Repo, err := aws.NewS3Repo(bucket, filePath)
+	s3Repo, err := aws.NewS3Repo(env.S3_BUCKET, env.S3_FILE_PATH)
 	checkError(err)
 
 	repo, err := cache.NewCacheRepo(s3Repo)
@@ -27,6 +23,7 @@ func main() {
 
 	router := backend.CreateRouter()
 
+	ui := getUIFileSystem()
 	err = operations.SetupUIRoutes(router, ui)
 	checkError(err)
 
@@ -39,13 +36,10 @@ func main() {
 		apiRoute.Get("/apps", operations.GetAppsHandler(repo))
 	})
 
-	port := ":" + os.Getenv("PORT")
+	port := ":" + env.PORT
 	fmt.Printf("Backend started  @ %s\n", port)
 	http.ListenAndServe(port, router)
 }
-
-//go:embed src/backend/mock-ui/*
-var devUI embed.FS
 
 //go:embed dist/*
 var prodUI embed.FS
