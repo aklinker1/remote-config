@@ -15,11 +15,11 @@ services:
       - ./main.go:/build/main.go
       - ./src/backend:/build/src/backend
     ports:
-      - 8000:8000
+      - 8000:80
     env_file: docker/aws.env
     environment:
       USE_MOCK_UI: "true"
-      PORT: 8000
+      PORT: 80
       S3_BUCKET: remote-config.anime-skip.com
       S3_FILE_PATH: dev.json
       AUTH_TOKEN: password
