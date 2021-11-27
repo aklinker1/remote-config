@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="space-y-2">
     <form class="flex space-x-4" @submit.prevent="createApp()">
       <input
         type="text"
