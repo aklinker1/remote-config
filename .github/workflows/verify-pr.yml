@@ -1,0 +1,16 @@
+name: Verify PR
+on:
+  push:
+    branches-ignore:
+      - main
+
+jobs:
+  build:
+    name: Build Docker
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v1
+
+      - name: Build
+        run: make build
