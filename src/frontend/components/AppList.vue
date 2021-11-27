@@ -10,6 +10,7 @@
       >
       <div class="flex-1" />
       <img
+        v-if="canDelete"
         class="
           w-10
           h-10
@@ -37,10 +38,13 @@
 import { api } from "../api";
 import createApp from "./CreateApp.vue";
 import TrashIcon from "../assets/ic-trash.svg";
+import { getAuthToken } from "../state/auth-token";
 
 const isLoading = ref(false);
 const apps = ref<string[]>([]);
 const error = ref<string | undefined>();
+
+const canDelete = !!getAuthToken();
 
 onMounted(loadApps);
 
