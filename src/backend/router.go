@@ -1,7 +1,6 @@
 package backend
 
 import (
-	"io/fs"
 	"net/http"
 	"strings"
 
@@ -9,7 +8,7 @@ import (
 	"github.com/go-chi/chi/middleware"
 )
 
-func CreateRouter(ui *fs.FS) *chi.Mux {
+func CreateRouter() *chi.Mux {
 	r := chi.NewRouter()
 	r.Use(cors)
 	r.Use(middleware.Recoverer)

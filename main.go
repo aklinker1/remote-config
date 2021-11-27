@@ -25,7 +25,7 @@ func main() {
 	repo, err := cache.NewCacheRepo(s3Repo)
 	checkError(err)
 
-	router := backend.CreateRouter(ui)
+	router := backend.CreateRouter()
 
 	err = operations.SetupUIRoutes(router, ui)
 	checkError(err)
@@ -51,13 +51,7 @@ var devUI embed.FS
 var prodUI embed.FS
 
 func getUIFileSystem() *fs.FS {
-	var err error
-	var ui fs.FS
-	if os.Getenv("USE_MOCK_UI") == "true" {
-		ui, err = fs.Sub(devUI, "src/backend/mock-ui")
-	} else {
-		ui, err = fs.Sub(prodUI, "dist")
-	}
+	ui, err := fs.Sub(prodUI, "dist")
 	if err != nil {
 		panic("ui folder not found in embedded files")
 	}
