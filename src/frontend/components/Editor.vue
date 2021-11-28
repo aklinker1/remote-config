@@ -33,6 +33,7 @@ import { PrismEditor } from 'vue-prism-editor';
 import Prism from 'prismjs';
 import 'vue-prism-editor/dist/prismeditor.min.css'; // Editor styles
 import 'prism-themes/themes/prism-atom-dark.css'; // syntax highlighting styles
+import 'prismjs/components/prism-json';
 
 const props = defineProps<{
   data: object;
@@ -82,7 +83,7 @@ watch(
 );
 
 const highlighter = (code: string) => {
-  return Prism.highlight(code, Prism.languages.javascript, 'javascript');
+  return Prism.highlight(code, Prism.languages.json, 'json');
 };
 
 function save() {
