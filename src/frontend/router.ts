@@ -1,18 +1,18 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import { getAuthToken } from "./state/auth-token";
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { getAuthToken } from './state/auth-token';
 
 const routes: RouteRecordRaw[] = [
   {
-    path: "/",
-    component: () => import("./components/Dashboard.vue"),
+    path: '/',
+    component: () => import('./components/Dashboard.vue'),
     children: [
       {
-        path: "",
-        component: () => import("./components/AppList.vue"),
+        path: '',
+        component: () => import('./components/AppList.vue'),
       },
       {
-        path: ":app",
-        component: () => import("./components/EditApp.vue"),
+        path: ':app',
+        component: () => import('./components/EditApp.vue'),
         meta: {
           requiresAuth: true,
         },
@@ -20,8 +20,8 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
-    path: "/login",
-    component: () => import("./components/Login.vue"),
+    path: '/login',
+    component: () => import('./components/Login.vue'),
   },
 ];
 

@@ -40,7 +40,7 @@ jobs:
         with:
           github-token: ${{ secrets.github_token }}
           version-file: ./meta.json
-          output-file: "false"
+          output-file: 'false'
 
       - name: Don't deploy
         if: ${{ steps.changelog.outputs.skipped == 'true' }}
@@ -72,7 +72,7 @@ jobs:
         uses: akhileshns/heroku-deploy@v3.7.8
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ""
+          heroku_app_name: ''
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
           justlogin: true
 

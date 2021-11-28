@@ -1,5 +1,5 @@
-import axios from "axios";
-import { getAuthToken } from "./state/auth-token";
+import axios from 'axios';
+import { getAuthToken } from './state/auth-token';
 
 function getAxiosConfig() {
   return {
@@ -11,23 +11,19 @@ function getAxiosConfig() {
 
 export const api = {
   async createNewConfig(appName: string): Promise<void> {
-    const { data: existingApps } = await axios.get<string[]>("/api/apps");
+    const { data: existingApps } = await axios.get<string[]>('/api/apps');
     if (!existingApps.includes(appName))
-      await axios.put(`/api/config/${appName}`, { "": "" }, getAxiosConfig());
+      await axios.put(`/api/config/${appName}`, { '': '' }, getAxiosConfig());
   },
   async updateConfig(appName: string, config: object): Promise<object> {
-    const res = await axios.put<object>(
-      `/api/config/${appName}`,
-      config,
-      getAxiosConfig()
-    );
+    const res = await axios.put<object>(`/api/config/${appName}`, config, getAxiosConfig());
     return res.data;
   },
   async deleteConfig(appName: string): Promise<void> {
     await axios.delete(`/api/config/${appName}`, getAxiosConfig());
   },
   async getApps(): Promise<string[]> {
-    const res = await axios.get<string[]>("/api/apps");
+    const res = await axios.get<string[]>('/api/apps');
     return res.data;
   },
   async getConfig(appName: string): Promise<object> {

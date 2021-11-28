@@ -17,3 +17,8 @@ run-prod: prep build
 		--env AUTH_TOKEN=password \
 		-p 80:80 \
 		anime-skip.com/remote-config
+
+format:
+	@pnpm prettier --write .
+	@go fmt anime-skip.com/remote-config
+	@go fmt anime-skip.com/remote-config/src/...

@@ -11,19 +11,7 @@
       <div class="flex-1" />
       <img
         v-if="canDelete"
-        class="
-          w-10
-          h-10
-          p-2
-          -m-2
-          opacity-50
-          hover:opacity-90
-          dark:bg-white dark:bg-opacity-0 dark:hover:bg-opacity-20
-          rounded-full
-          text-white text-opacity-70 text-xs
-          cursor-pointer
-          transition-all
-        "
+        class="w-10 h-10 p-2 -m-2 opacity-50 hover:opacity-90 dark:bg-white dark:bg-opacity-0 dark:hover:bg-opacity-20 rounded-full text-white text-opacity-70 text-xs cursor-pointer transition-all"
         :src="TrashIcon"
         :alt="`Delete ${app}`"
         :title="`Delete ${app}`"
@@ -36,10 +24,10 @@
 </template>
 
 <script lang="ts" setup>
-import { api } from "../api";
-import createApp from "./CreateApp.vue";
-import TrashIcon from "../assets/ic-trash.svg";
-import { getAuthToken } from "../state/auth-token";
+import { api } from '../api';
+import createApp from './CreateApp.vue';
+import TrashIcon from '../assets/ic-trash.svg';
+import { getAuthToken } from '../state/auth-token';
 
 const isLoading = ref(false);
 const apps = ref<string[]>([]);
@@ -57,7 +45,7 @@ async function loadApps() {
     if (err instanceof Error) {
       error.value = err.message;
     } else {
-      error.value = "Unknown error: " + JSON.stringify(err);
+      error.value = 'Unknown error: ' + JSON.stringify(err);
     }
   } finally {
     isLoading.value = false;
@@ -72,7 +60,7 @@ async function deleteApp(app: string) {
     if (err instanceof Error) {
       error.value = err.message;
     } else {
-      error.value = "Unknown error: " + JSON.stringify(err);
+      error.value = 'Unknown error: ' + JSON.stringify(err);
     }
   } finally {
     isLoading.value = false;

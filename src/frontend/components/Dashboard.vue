@@ -4,5 +4,5 @@
 </template>
 
 <script lang="ts" setup>
-import Breadcrumbs from "./Breadcrumbs.vue";
+import Breadcrumbs from './Breadcrumbs.vue';
 </script>

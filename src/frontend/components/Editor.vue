@@ -17,16 +17,7 @@
     <p v-if="error" class="text-red-300">{{ error }}</p>
 
     <div
-      class="
-        absolute
-        inset-0
-        bg-gray-900 bg-opacity-90
-        flex
-        items-center
-        justify-center
-        transition-opacity
-        duration-200
-      "
+      class="absolute inset-0 bg-gray-900 bg-opacity-90 flex items-center justify-center transition-opacity duration-200"
       :class="{
         'opacity-100 pointer-events-auto cursor-auto': loading,
         'opacity-0 pointer-events-none cursor-not-allowed': !loading,
@@ -38,10 +29,10 @@
 </template>
 
 <script lang="ts" setup>
-import { PrismEditor } from "vue-prism-editor";
-import Prism from "prismjs";
-import "vue-prism-editor/dist/prismeditor.min.css"; // Editor styles
-import "prism-themes/themes/prism-atom-dark.css"; // syntax highlighting styles
+import { PrismEditor } from 'vue-prism-editor';
+import Prism from 'prismjs';
+import 'vue-prism-editor/dist/prismeditor.min.css'; // Editor styles
+import 'prism-themes/themes/prism-atom-dark.css'; // syntax highlighting styles
 
 const props = defineProps<{
   data: object;
@@ -50,12 +41,12 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-  (event: "save", config: object): void;
-  (event: "discard"): void;
+  (event: 'save', config: object): void;
+  (event: 'discard'): void;
 }>();
 
 const error = ref<string>();
-function stringify(obj: object, fallback = ""): string {
+function stringify(obj: object, fallback = ''): string {
   try {
     error.value = undefined;
     return JSON.stringify(obj, null, 2);
@@ -63,7 +54,7 @@ function stringify(obj: object, fallback = ""): string {
     if (err instanceof Error) {
       error.value = err.message;
     } else {
-      error.value = "Unknown error: " + JSON.stringify(err);
+      error.value = 'Unknown error: ' + JSON.stringify(err);
     }
     return fallback;
   }
@@ -76,7 +67,7 @@ function parse(str: string): object {
     if (err instanceof Error) {
       error.value = err.message;
     } else {
-      error.value = "Unknown error: " + JSON.stringify(err);
+      error.value = 'Unknown error: ' + JSON.stringify(err);
     }
     throw err;
   }
@@ -85,22 +76,22 @@ function parse(str: string): object {
 const code = ref(stringify(props.data));
 watch(
   () => props.data,
-  (newData) => {
+  newData => {
     code.value = stringify(newData);
-  }
+  },
 );
 
 const highlighter = (code: string) => {
-  return Prism.highlight(code, Prism.languages.javascript, "javascript");
+  return Prism.highlight(code, Prism.languages.javascript, 'javascript');
 };
 
 function save() {
-  emits("save", parse(code.value));
+  emits('save', parse(code.value));
 }
 
 function discard() {
   code.value = stringify(props.data);
-  emits("discard");
+  emits('discard');
 }
 
 function format() {

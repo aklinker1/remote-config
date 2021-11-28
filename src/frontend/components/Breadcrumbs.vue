@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useRoute } from "vue-router";
+import { useRoute } from 'vue-router';
 
 const route = useRoute();
 const pathStr = ref(route.path);
@@ -22,15 +22,15 @@ watch(
     const newPath = route.path;
     pathStr.value = newPath;
     path.value = getPath();
-  }
+  },
 );
 
 function getPath(): string[] {
   const items = route.path
-    .replace(/^\//, "Apps/")
-    .replace(/\/$/g, "")
-    .split("/")
-    .map((part) => decodeURIComponent(part));
+    .replace(/^\//, 'Apps/')
+    .replace(/\/$/g, '')
+    .split('/')
+    .map(part => decodeURIComponent(part));
   return items;
 }
 </script>

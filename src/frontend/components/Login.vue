@@ -13,8 +13,8 @@
 </template>
 
 <script lang="ts" setup>
-import { useRoute, useRouter } from "vue-router";
-import { getAuthToken, setAuthToken } from "../state/auth-token";
+import { useRoute, useRouter } from 'vue-router';
+import { getAuthToken, setAuthToken } from '../state/auth-token';
 
 const authToken = ref(getAuthToken());
 
@@ -23,6 +23,6 @@ const route = useRoute();
 
 function login() {
   setAuthToken(authToken.value);
-  router.push((route.params.redirect as string | undefined) || "/");
+  router.push((route.params.redirect as string | undefined) || '/');
 }
 </script>

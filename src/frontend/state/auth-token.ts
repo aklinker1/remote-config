@@ -1,5 +1,5 @@
 const storage = window.sessionStorage;
-const STORAGE_KEY = "token";
+const STORAGE_KEY = 'token';
 
 export function getAuthToken(): string | undefined {
   return storage.getItem(STORAGE_KEY) ?? undefined;
