@@ -22,6 +22,8 @@ Make sure you have all the required tools installed
 Then startup the app in dev mode and visit <http://localhost>!
 
 ```bash
+pnpm install
+
 echo "AWS_REGION=<fill-out>
 AWS_ACCESS_KEY_ID=<fill-out>
 AWS_SECRET_ACCESS_KEY=<fill-out>
