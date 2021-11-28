@@ -12,7 +12,7 @@ input[type='submit'].secondary {
 }
 button:disabled,
 input[type='submit']:disabled {
-  @apply cursor-not-allowed opacity-30;
+  @apply cursor-not-allowed opacity-30 pointer-events-none;
 }
 
 input[type='text'],

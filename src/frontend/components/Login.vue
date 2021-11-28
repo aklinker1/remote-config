@@ -23,6 +23,6 @@ const route = useRoute();
 
 function login() {
   setAuthToken(authToken.value);
-  router.push((route.params.redirect as string | undefined) || '/');
+  router.push((route.query.redirect as string | undefined) || '/');
 }
 </script>

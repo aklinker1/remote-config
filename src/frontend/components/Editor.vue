@@ -1,8 +1,8 @@
 <template>
   <div class="space-y-4 shadow-lg p-6 rounded bg-gray-900 relative">
     <div class="flex space-x-2">
-      <button class="primary" @click="save()">Save</button>
-      <button class="secondary" @click="discard()">Discard</button>
+      <button :disabled="!needsSaved" class="primary" @click="save()">{{ saveLabel }}</button>
+      <button :disabled="!needsSaved" class="secondary" @click="discard()">Discard</button>
       <div class="flex-1" />
       <button class="primary" @click="format()">Format</button>
     </div>
@@ -85,6 +85,10 @@ watch(
 const highlighter = (code: string) => {
   return Prism.highlight(code, Prism.languages.json, 'json');
 };
+
+const needsSaved = computed(() => stringify(props.data) !== code.value);
+
+const saveLabel = computed(() => (needsSaved.value ? 'Save' : 'Saved'));
 
 function save() {
   emits('save', parse(code.value));
