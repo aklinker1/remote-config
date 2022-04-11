@@ -10,3 +10,8 @@ type Repo interface {
 	SaveConfig(app string, config JSON) (JSON, error)
 	DeleteConfig(app string) (JSON, error)
 }
+
+type Health struct {
+	Version string `json:"version"`
+	Stage   string `json:"stage"`
+}

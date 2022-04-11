@@ -1,12 +1,14 @@
+VERSION = $(shell jq -r .version package.json)
+
 build:
-	docker build . -t anime-skip.com/remote-config
+	docker build . --build-arg VERSION=$(VERSION) --build-arg STAGE=production -t anime-skip.com/remote-config
 
 prep:
 	@mkdir -p dist
 	@echo "<html></html>" > dist/index.html
 
 run: prep
-	docker-compose up --build -V
+	VERSION=$(VERSION) docker-compose up --build -V
 
 run-prod: prep build
 	docker run \

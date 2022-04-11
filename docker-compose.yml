@@ -17,6 +17,9 @@ services:
     ports:
       - 8000:80
     env_file: .env
+    environment:
+      VERSION: ${VERSION}
+      STAGE: development
 
   frontend:
     build:
