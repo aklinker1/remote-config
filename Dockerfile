@@ -9,13 +9,21 @@ ADD . .
 RUN pnpm vite build
 
 FROM golang:1.17-alpine as backend-builder
+RUN apk add --update gcc libc-dev
 RUN mkdir /build
 WORKDIR /build
 ADD go.mod go.sum ./
 RUN go mod download
 COPY . .
+ARG VERSION
+ARG STAGE
+RUN : "${VERSION:?Build argument needs to be passed and non-empty}"
+RUN : "${STAGE:?Build argument needs to be passed as 'development' or 'production'}"
 COPY --from=frontend-builder /build/dist ./dist
-RUN go build -o bin/app main.go
+RUN go build \
+    -trimpath \
+    -ldflags "-X anime-skip.com/remote-config/src/backend/env.VERSION=$VERSION -X anime-skip.com/remote-config/src/backend/env.STAGE=$STAGE" \
+    -o bin/app main.go
 
 FROM alpine
 WORKDIR /app

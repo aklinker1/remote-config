@@ -28,6 +28,7 @@ func main() {
 	checkError(err)
 
 	router.Route("/api/", func(apiRoute chi.Router) {
+		apiRoute.Get("/health", operations.HealthHandler())
 		apiRoute.Route("/config/{app}", func(configRoute chi.Router) {
 			configRoute.Get("/", operations.GetAppConfigHandler(repo))
 			configRoute.Put("/", operations.UpdateAppConfigHandler(repo))

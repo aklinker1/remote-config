@@ -1,8 +1,5 @@
-name: Verify PR
-on:
-  push:
-    branches-ignore:
-      - main
+name: Validate
+on: [workflow_call, push]
 
 jobs:
   build:
@@ -13,4 +10,4 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Build
-        run: make build
+        run: make

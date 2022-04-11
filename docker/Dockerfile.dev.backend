@@ -1,5 +1,6 @@
 # Setup
 FROM golang:1.17-alpine
+RUN apk add --update gcc libc-dev
 RUN mkdir /build
 WORKDIR /build
 ADD go.mod go.sum ./
