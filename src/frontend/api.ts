@@ -23,7 +23,7 @@ export const api = {
     await axios.delete(`/api/config/${appName}`, getAxiosConfig());
   },
   async getApps(): Promise<string[]> {
-    const res = await axios.get<string[]>('/api/apps');
+    const res = await axios.get<string[]>('/api/apps', getAxiosConfig());
     return res.data;
   },
   async getConfig(appName: string): Promise<object> {

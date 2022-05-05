@@ -9,6 +9,9 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         component: () => import('./components/AppList.vue'),
+        meta: {
+          requiresAuth: true,
+        },
       },
       {
         path: ':app',

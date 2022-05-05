@@ -11,6 +11,7 @@ import (
 	"anime-skip.com/remote-config/src/backend/cache"
 	"anime-skip.com/remote-config/src/backend/env"
 	"anime-skip.com/remote-config/src/backend/operations"
+	"anime-skip.com/remote-config/src/backend/utils"
 	"github.com/go-chi/chi"
 )
 
@@ -27,14 +28,22 @@ func main() {
 	err = operations.SetupUIRoutes(router, ui)
 	checkError(err)
 
+	// Unauthorized operations
+	getHealth := operations.HealthHandler()
+	getConfig := operations.GetAppConfigHandler(repo)
+	// Authorized operations
+	listApps := authMiddleware(operations.GetAppsHandler(repo))
+	updateConfig := authMiddleware(operations.UpdateAppConfigHandler(repo))
+	deleteConfig := authMiddleware(operations.DeleteAppConfigHandler(repo))
+
 	router.Route("/api/", func(apiRoute chi.Router) {
-		apiRoute.Get("/health", operations.HealthHandler())
+		apiRoute.Get("/health", getHealth)
 		apiRoute.Route("/config/{app}", func(configRoute chi.Router) {
-			configRoute.Get("/", operations.GetAppConfigHandler(repo))
-			configRoute.Put("/", operations.UpdateAppConfigHandler(repo))
-			configRoute.Delete("/", operations.DeleteAppConfigHandler(repo))
+			configRoute.Get("/", getConfig)
+			configRoute.Put("/", updateConfig)
+			configRoute.Delete("/", deleteConfig)
 		})
-		apiRoute.Get("/apps", operations.GetAppsHandler(repo))
+		apiRoute.Get("/apps", listApps)
 	})
 
 	port := ":" + env.PORT
@@ -57,4 +66,16 @@ func checkError(err error) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func authMiddleware(handler http.HandlerFunc) http.HandlerFunc {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		err := utils.CheckAuthHeader(r)
+		if err != nil {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+
+		handler(w, r)
+	})
 }
