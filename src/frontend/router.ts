@@ -35,7 +35,7 @@ export const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   if (!getAuthToken() && to.meta.requiresAuth) {
-    router.replace(`/login?redirect=${to.fullPath}`);
+    router.push(`/login?redirect=${to.fullPath}`);
     return;
   }
   next();
