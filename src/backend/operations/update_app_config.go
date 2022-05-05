@@ -12,12 +12,6 @@ import (
 
 func UpdateAppConfigHandler(repo backend.Repo) http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
-		err := utils.CheckAuthHeader(r)
-		if err != nil {
-			rw.WriteHeader(http.StatusUnauthorized)
-			return
-		}
-
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			panic(err)
