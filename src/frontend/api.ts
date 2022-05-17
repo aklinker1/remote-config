@@ -11,7 +11,7 @@ function getAxiosConfig() {
 
 export const api = {
   async createNewConfig(appName: string): Promise<void> {
-    const { data: existingApps } = await axios.get<string[]>('/api/apps');
+    const existingApps = await this.getApps();
     if (!existingApps.includes(appName))
       await axios.put(`/api/config/${appName}`, { '': '' }, getAxiosConfig());
   },
@@ -23,6 +23,7 @@ export const api = {
     await axios.delete(`/api/config/${appName}`, getAxiosConfig());
   },
   async getApps(): Promise<string[]> {
+    console.log('getting apps');
     const res = await axios.get<string[]>('/api/apps', getAxiosConfig());
     return res.data;
   },
