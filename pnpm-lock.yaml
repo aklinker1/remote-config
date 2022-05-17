@@ -1,4 +1,4 @@
-lockfileVersion: 5.3
+lockfileVersion: 5.4
 
 specifiers:
   '@types/prismjs': ^1.16.6
@@ -16,7 +16,7 @@ specifiers:
   vite: ^2.6.13
   vue: ^3.2.20
   vue-global-api: ^0.4.1
-  vue-prism-editor: ^2.0.0-alpha.2
+  vue-prism-editor: 2.0.0-alpha.2
   vue-router: ^4.0.12
   vue-tsc: ^0.28.10
 
@@ -37,7 +37,7 @@ devDependencies:
   postcss: 8.4.0
   prettier: 2.5.0
   pretty-quick: 3.1.2_prettier@2.5.0
-  tailwindcss: 2.2.19_0cf92d2d2a82475715d2e3961f3869b9
+  tailwindcss: 2.2.19_bt4s2ljkqjdvofos4olb6odjxe
   typescript: 4.5.2
   vite: 2.6.14
   vue-tsc: 0.28.10_typescript@4.5.2
@@ -59,7 +59,6 @@ packages:
         integrity: sha512-K4JvCtQqad9OY2+yTU8w+E82ywk/fe+ELNlt1G8z3bVGlZfn/hOcQQsUhGhW/N+tb3fxK800wLtKOE/aM0m72w==,
       }
     engines: { node: '>=6.9.0' }
-    dev: true
 
   /@babel/highlight/7.16.0:
     resolution:
@@ -80,6 +79,8 @@ packages:
       }
     engines: { node: '>=6.0.0' }
     hasBin: true
+    dependencies:
+      '@babel/types': 7.16.0
 
   /@babel/types/7.16.0:
     resolution:
@@ -90,7 +91,6 @@ packages:
     dependencies:
       '@babel/helper-validator-identifier': 7.15.7
       to-fast-properties: 2.0.0
-    dev: true
 
   /@emmetio/abbreviation/2.2.2:
     resolution:
@@ -2454,7 +2454,7 @@ packages:
       has-flag: 4.0.0
     dev: true
 
-  /tailwindcss/2.2.19_0cf92d2d2a82475715d2e3961f3869b9:
+  /tailwindcss/2.2.19_bt4s2ljkqjdvofos4olb6odjxe:
     resolution:
       {
         integrity: sha512-6Ui7JSVtXadtTUo2NtkBBacobzWiQYVjYW0ZnKaP9S1ZCKQ0w7KVNz+YSDI/j7O7KCMHbOkz94ZMQhbT9pOqjw==,
@@ -2524,7 +2524,6 @@ packages:
   /to-fast-properties/2.0.0:
     resolution: { integrity: sha1-3F5pjL0HkmW8c+A3doGk5Og/YW4= }
     engines: { node: '>=4' }
-    dev: true
 
   /to-regex-range/5.0.1:
     resolution:
@@ -2762,10 +2761,10 @@ packages:
       vscode-typescript-languageservice: 0.28.10
     dev: true
 
-  /vue-demi/0.12.1_vue@3.2.22:
+  /vue-demi/0.12.5_vue@3.2.22:
     resolution:
       {
-        integrity: sha512-QL3ny+wX8c6Xm1/EZylbgzdoDolye+VpCXRhI2hug9dJTP3OUJ3lmiKN3CsVV3mOJKwFi0nsstbgob0vG7aoIw==,
+        integrity: sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==,
       }
     engines: { node: '>=12' }
     hasBin: true
@@ -2787,7 +2786,7 @@ packages:
       }
     dependencies:
       eslint-config-vue-global-api: 0.4.1
-      vue-demi: 0.12.1_vue@3.2.22
+      vue-demi: 0.12.5_vue@3.2.22
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue

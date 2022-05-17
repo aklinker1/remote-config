@@ -7,10 +7,9 @@
       <button class="primary" @click="format()">Format</button>
     </div>
     <prism-editor
-      class="h-96 font-mono dark:text-white -mx-3"
+      class="h-96 font-mono dark:text-white"
       v-model="code"
       :highlight="highlighter"
-      line-numbers
       :insert-spaces="true"
       :readonly="loading"
     />
